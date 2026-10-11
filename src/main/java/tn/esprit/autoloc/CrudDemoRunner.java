@@ -39,16 +39,16 @@ public class CrudDemoRunner implements CommandLineRunner {
         vehicule = vehiculeService.addVehicule(vehicule);
 
         // READ
-        System.out.println("Nombre de vehicules : " + vehiculeService.getAllVehicules().size());
-        System.out.println("Vehicule trouve : " + vehiculeService.getVehiculeById(vehicule.getIdVehicule()).getMarque());
-        System.out.println("Nombre d'agences : " + agenceService.getAllAgences().size());
+        System.out.println("Nombre de vehicules : " + vehiculeService.retrieveAllVehicules().size());
+        System.out.println("Vehicule trouve : " + vehiculeService.retrieveVehicule(vehicule.getIdVehicule()).getMarque());
+        System.out.println("Nombre d'agences : " + agenceService.retrieveAllAgences().size());
 
         // UPDATE
         vehicule.setStatut(StatutVehicule.LOUE);
         vehiculeService.updateVehicule(vehicule);
 
         // DELETE : le véhicule d'abord (il référence l'agence), puis l'agence
-        vehiculeService.deleteVehicule(vehicule.getIdVehicule());
-        agenceService.deleteAgence(agence.getIdAgence());
+        vehiculeService.removeVehicule(vehicule.getIdVehicule());
+        agenceService.removeAgence(agence.getIdAgence());
     }
 }

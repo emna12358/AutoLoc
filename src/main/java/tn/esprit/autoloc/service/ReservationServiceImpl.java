@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Reservation;
 import tn.esprit.autoloc.repository.ReservationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,27 +15,36 @@ public class ReservationServiceImpl implements IReservationService {
     private ReservationRepository reservationRepository;
 
     @Override
-    public Reservation addReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
-    }
-
-    @Override
-    public List<Reservation> getAllReservations() {
+    public List<Reservation> retrieveAllReservations() {
         return reservationRepository.findAll();
     }
 
     @Override
-    public Reservation getReservationById(Long id) {
-        return reservationRepository.findById(id).orElse(null);
+    public Reservation addReservation(Reservation c) {
+        return reservationRepository.save(c);
     }
 
     @Override
-    public Reservation updateReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public Reservation updateReservation(Reservation c) {
+        return reservationRepository.save(c);
     }
 
     @Override
-    public void deleteReservation(Long id) {
-        reservationRepository.deleteById(id);
+    public Reservation retrieveReservation(Long idReservation) {
+        return reservationRepository.findById(idReservation).orElse(null);
+    }
+
+    @Override
+    public void removeReservation(Long idReservation) {
+        reservationRepository.deleteById(idReservation);
+    }
+
+    @Override
+    public List<Reservation> addReservations(List<Reservation> reservations) {
+        List<Reservation> saved = new ArrayList<>();
+        for (Reservation c : reservations) {
+            saved.add(reservationRepository.save(c));
+        }
+        return saved;
     }
 }

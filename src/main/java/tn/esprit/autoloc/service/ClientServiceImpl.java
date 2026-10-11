@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Client;
 import tn.esprit.autoloc.repository.ClientRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,27 +15,36 @@ public class ClientServiceImpl implements IClientService {
     private ClientRepository clientRepository;
 
     @Override
-    public Client addClient(Client client) {
-        return clientRepository.save(client);
-    }
-
-    @Override
-    public List<Client> getAllClients() {
+    public List<Client> retrieveAllClients() {
         return clientRepository.findAll();
     }
 
     @Override
-    public Client getClientById(Long id) {
-        return clientRepository.findById(id).orElse(null);
+    public Client addClient(Client c) {
+        return clientRepository.save(c);
     }
 
     @Override
-    public Client updateClient(Client client) {
-        return clientRepository.save(client);
+    public Client updateClient(Client c) {
+        return clientRepository.save(c);
     }
 
     @Override
-    public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
+    public Client retrieveClient(Long idClient) {
+        return clientRepository.findById(idClient).orElse(null);
+    }
+
+    @Override
+    public void removeClient(Long idClient) {
+        clientRepository.deleteById(idClient);
+    }
+
+    @Override
+    public List<Client> addClients(List<Client> clients) {
+        List<Client> saved = new ArrayList<>();
+        for (Client c : clients) {
+            saved.add(clientRepository.save(c));
+        }
+        return saved;
     }
 }

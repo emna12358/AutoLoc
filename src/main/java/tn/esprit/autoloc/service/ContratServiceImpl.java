@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Contrat;
 import tn.esprit.autoloc.repository.ContratRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,27 +15,36 @@ public class ContratServiceImpl implements IContratService {
     private ContratRepository contratRepository;
 
     @Override
-    public Contrat addContrat(Contrat contrat) {
-        return contratRepository.save(contrat);
-    }
-
-    @Override
-    public List<Contrat> getAllContrats() {
+    public List<Contrat> retrieveAllContrats() {
         return contratRepository.findAll();
     }
 
     @Override
-    public Contrat getContratById(Long id) {
-        return contratRepository.findById(id).orElse(null);
+    public Contrat addContrat(Contrat c) {
+        return contratRepository.save(c);
     }
 
     @Override
-    public Contrat updateContrat(Contrat contrat) {
-        return contratRepository.save(contrat);
+    public Contrat updateContrat(Contrat c) {
+        return contratRepository.save(c);
     }
 
     @Override
-    public void deleteContrat(Long id) {
-        contratRepository.deleteById(id);
+    public Contrat retrieveContrat(Long idContrat) {
+        return contratRepository.findById(idContrat).orElse(null);
+    }
+
+    @Override
+    public void removeContrat(Long idContrat) {
+        contratRepository.deleteById(idContrat);
+    }
+
+    @Override
+    public List<Contrat> addContrats(List<Contrat> contrats) {
+        List<Contrat> saved = new ArrayList<>();
+        for (Contrat c : contrats) {
+            saved.add(contratRepository.save(c));
+        }
+        return saved;
     }
 }
